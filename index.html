@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generador de Memoria de Sostenibilidad GRI</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="matriz-wrap app" id="matriz-wrap" data-default-lang="es">
+
+  <!-- LANG -->
+  <div class="lang-bar">
+    <button class="lang-btn active" onclick="MATRIZ.setLang('es')">ES</button>
+    <button class="lang-btn" onclick="MATRIZ.setLang('va')">VAL</button>
+    <button class="lang-btn" onclick="MATRIZ.setLang('en')">EN</button>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag" data-t="hero_tag">Herramienta gratuita</div>
+    <h1 data-t="hero_title">Genera tu <em>Memoria de Sostenibilidad</em> en minutos</h1>
+    <p data-t="hero_desc">Sin excels eternos. Sin consultoras. Completa los datos de tu empresa y obten un informe estructurado listo para maquetar.</p>
+    <div class="hero-steps">
+      <div class="hero-step"><div class="step-dot"></div> <span data-t="hero_s1">Rellena tu perfil de empresa</span></div>
+      <div class="hero-step"><div class="step-dot"></div> <span data-t="hero_s2">Indica tus indicadores ESG</span></div>
+      <div class="hero-step"><div class="step-dot"></div> <span data-t="hero_s3">Descarga o imprime el informe</span></div>
+    </div>
+  </div>
+
+  <!-- UI -->
+  <div class="app-ui" id="app-ui">
+
+    <div class="steps-nav" id="steps-nav"></div>
+
+    <div>
+      <div class="progress-label">
+        <span id="step-label"></span>
+        <strong id="pct-label">0%</strong>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+    </div>
+
+    <!-- PAGE 1: EMPRESA -->
+    <div class="page active" id="page-1">
+      <div class="section-card fade-in">
+        <div class="section-header">
+          <div class="section-icon org">ORG</div>
+          <div>
+            <div class="section-title" data-t="p1_title">Perfil de la empresa</div>
+            <div class="section-subtitle" data-t="p1_sub">Datos basicos de identificacion</div>
+          </div>
+        </div>
+        <div class="section-body grid-2">
+          <div class="field">
+            <label for="empresa_nombre"><span data-t="f_nombre">Nombre de la empresa</span> <span class="req">*</span></label>
+            <input type="text" id="empresa_nombre" data-ph="f_nombre_ph">
+          </div>
+          <div class="field">
+            <label for="empresa_anio"><span data-t="f_anio">Ano del informe</span> <span class="req">*</span></label>
+            <input type="number" id="empresa_anio" value="2025" min="2000" max="2099">
+          </div>
+          <div class="field">
+            <label for="empresa_sector"><span data-t="f_sector">Sector / Industria</span> <span class="req">*</span></label>
+            <select id="empresa_sector"><option value="" data-t="f_select">-- Selecciona --</option></select>
+          </div>
+          <div class="field">
+            <label for="empresa_tamano" data-t="f_tamano">Tamano de la empresa</label>
+            <select id="empresa_tamano"><option value="" data-t="f_select">-- Selecciona --</option></select>
+          </div>
+          <div class="field">
+            <label for="empresa_empleados" data-t="f_empleados">N. de empleados</label>
+            <input type="number" id="empresa_empleados" placeholder="45" min="1">
+          </div>
+          <div class="field">
+            <label for="empresa_pais" data-t="f_pais">Pais / Region principal</label>
+            <input type="text" id="empresa_pais" data-ph="f_pais_ph">
+          </div>
+          <div class="field field-full">
+            <label for="empresa_web" data-t="f_web">Pagina web o contacto</label>
+            <input type="text" id="empresa_web" placeholder="www.tuempresa.com">
+          </div>
+          <div class="field field-full">
+            <label for="empresa_descripcion"><span data-t="f_desc">Descripcion breve de la actividad</span> <span class="hint" data-t="f_desc_hint">(1-2 frases)</span></label>
+            <textarea id="empresa_descripcion" data-ph="f_desc_ph"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <span></span>
+        <button class="btn btn-primary" onclick="MATRIZ.goTo(2)" data-t="btn_next_gov">Siguiente -- Gobernanza</button>
+      </div>
+    </div>
+
+    <!-- PAGE 2: GOBERNANZA -->
+    <div class="page" id="page-2">
+      <div class="section-card fade-in">
+        <div class="section-header">
+          <div class="section-icon gov">GOV</div>
+          <div>
+            <div class="section-title" data-t="p2_title">Gobernanza y etica empresarial</div>
+            <div class="section-subtitle" data-t="p2_sub">Estructura, transparencia y buen gobierno</div>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="field">
+            <label for="gov_compromisos" data-t="gov_codigo" id="lbl-gov_codigo">Dispone de un Codigo de Conducta o Etica?</label>
+            <div class="radio-group" id="rg-gov_codigo" role="radiogroup" aria-labelledby="lbl-gov_codigo"></div>
+          </div>
+          <div class="field">
+            <label data-t="gov_anti" id="lbl-gov_anti">Politica anticorrupcion y antisoborno</label>
+            <div class="radio-group" id="rg-gov_anti" role="radiogroup" aria-labelledby="lbl-gov_anti"></div>
+          </div>
+          <div class="field">
+            <label data-t="gov_canal" id="lbl-gov_canal">Canal de denuncias (whistleblowing)</label>
+            <div class="radio-group" id="rg-gov_canal" role="radiogroup" aria-labelledby="lbl-gov_canal"></div>
+          </div>
+          <div class="field">
+            <label id="lbl-gov_marcos"><span data-t="gov_marcos">Marcos de reporte que sigue</span> <span class="hint" data-t="gov_marcos_hint">(selecciona todos los aplicables)</span></label>
+            <div class="check-group" id="cg-marcos" role="group" aria-labelledby="lbl-gov_marcos"></div>
+          </div>
+          <div class="field">
+            <label data-t="gov_compromisos">Compromisos y certificaciones destacadas</label>
+            <textarea id="gov_compromisos" data-ph="gov_compromisos_ph"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="MATRIZ.goTo(1)" data-t="btn_prev">Anterior</button>
+        <button class="btn btn-primary" onclick="MATRIZ.goTo(3)" data-t="btn_next_env">Siguiente -- Medio Ambiente</button>
+      </div>
+    </div>
+
+    <!-- PAGE 3: MEDIO AMBIENTE -->
+    <div class="page" id="page-3">
+      <div class="section-card fade-in">
+        <div class="section-header">
+          <div class="section-icon env">ENV</div>
+          <div>
+            <div class="section-title" data-t="p3_title">Impacto medioambiental</div>
+            <div class="section-subtitle" data-t="p3_sub">Indicadores de la dimension E (Environmental)</div>
+          </div>
+        </div>
+        <div class="section-body" id="env-indicators"></div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="MATRIZ.goTo(2)" data-t="btn_prev">Anterior</button>
+        <button class="btn btn-primary" onclick="MATRIZ.goTo(4)" data-t="btn_next_soc">Siguiente -- Social</button>
+      </div>
+    </div>
+
+    <!-- PAGE 4: SOCIAL -->
+    <div class="page" id="page-4">
+      <div class="section-card fade-in">
+        <div class="section-header">
+          <div class="section-icon soc">SOC</div>
+          <div>
+            <div class="section-title" data-t="p4_title">Dimension Social</div>
+            <div class="section-subtitle" data-t="p4_sub">Personas, diversidad, comunidad y cadena de valor</div>
+          </div>
+        </div>
+        <div class="section-body" id="soc-indicators"></div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="MATRIZ.goTo(3)" data-t="btn_prev">Anterior</button>
+        <button class="btn btn-primary" onclick="MATRIZ.goTo(5)" data-t="btn_next_eco">Siguiente -- Economica</button>
+      </div>
+    </div>
+
+    <!-- PAGE 5: ECONOMICA -->
+    <div class="page" id="page-5">
+      <div class="section-card fade-in">
+        <div class="section-header">
+          <div class="section-icon eco">ECO</div>
+          <div>
+            <div class="section-title" data-t="p5_title">Dimension Economica</div>
+            <div class="section-subtitle" data-t="p5_sub">Valor generado, inversion y grupos de interes</div>
+          </div>
+        </div>
+        <div class="section-body" id="eco-indicators"></div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="MATRIZ.goTo(4)" data-t="btn_prev">Anterior</button>
+        <button class="btn btn-primary" onclick="MATRIZ.goTo(6)" data-t="btn_next_gen">Siguiente -- Generar informe</button>
+      </div>
+    </div>
+
+    <!-- PAGE 6: FORMATO -->
+    <div class="page" id="page-6">
+      <div class="section-card fade-in">
+        <div class="section-header">
+          <div class="section-icon gen">PDF</div>
+          <div>
+            <div class="section-title" data-t="p6_title">Como quieres tu informe?</div>
+            <div class="section-subtitle" data-t="p6_sub">Elige el formato de salida</div>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="format-cards" id="format-cards"></div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="MATRIZ.goTo(5)" data-t="btn_prev">Anterior</button>
+        <button class="btn btn-primary" id="btn-generar" onclick="MATRIZ.generarInforme()" data-t="btn_generate">Generar mi Memoria de Sostenibilidad</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- REPORT OUTPUT -->
+  <div id="report-output">
+    <div class="report-header">
+      <div style="margin-bottom:1rem;opacity:0.6;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase" data-t="rpt_header_tag">MEMORIA DE SOSTENIBILIDAD</div>
+      <h2 id="out-empresa">—</h2>
+      <div class="company-name" id="out-year"></div>
+      <div class="report-meta">
+        <div class="report-meta-item"><span data-t="rpt_sector">Sector</span><strong id="out-sector"></strong></div>
+        <div class="report-meta-item"><span data-t="rpt_size">Tamano</span><strong id="out-tamano"></strong></div>
+        <div class="report-meta-item"><span data-t="rpt_date">Generado</span><strong id="out-fecha"></strong></div>
+      </div>
+    </div>
+    <div class="report-body">
+      <div class="report-section">
+        <div class="report-section-title" data-t="rpt_s1">1. Presentacion de la organizacion</div>
+        <div class="report-text-block" id="out-descripcion"></div>
+        <dl>
+          <div class="report-row"><dt data-t="rpt_country">Pais / Region</dt><dd id="out-pais"></dd></div>
+          <div class="report-row"><dt data-t="f_empleados">Empleados</dt><dd id="out-empleados"></dd></div>
+          <div class="report-row"><dt>Web</dt><dd id="out-web"></dd></div>
+        </dl>
+      </div>
+      <div class="report-section">
+        <div class="report-section-title" data-t="rpt_s2">2. Gobernanza y etica</div>
+        <dl>
+          <div class="report-row"><dt data-t="rpt_code">Codigo de Conducta</dt><dd id="out-codigo"></dd></div>
+          <div class="report-row"><dt data-t="rpt_anticorr">Politica anticorrupcion</dt><dd id="out-anti"></dd></div>
+          <div class="report-row"><dt data-t="rpt_channel">Canal de denuncias</dt><dd id="out-canal"></dd></div>
+          <div class="report-row"><dt data-t="rpt_frameworks">Marcos de reporte</dt><dd id="out-marcos"></dd></div>
+        </dl>
+        <div class="report-text-block" id="out-compromisos" style="margin-top:0.5rem"></div>
+      </div>
+      <div class="report-section">
+        <div class="report-section-title" data-t="rpt_s3">3. Desempeno ambiental (E)</div>
+        <div class="kpi-grid" id="kpi-env"></div>
+        <dl><div class="report-row"><dt data-t="rpt_climate">Plan climatico / net-zero</dt><dd id="out-netzero"></dd></div></dl>
+        <div class="report-text-block" id="out-env-iniciativas" style="margin-top:0.5rem"></div>
+      </div>
+      <div class="report-section">
+        <div class="report-section-title" data-t="rpt_s4">4. Desempeno social (S)</div>
+        <div class="kpi-grid" id="kpi-soc"></div>
+        <div class="report-text-block" id="out-soc-politicas" style="margin-top:0.5rem"></div>
+        <div class="report-text-block" id="out-soc-comunidad"></div>
+      </div>
+      <div class="report-section">
+        <div class="report-section-title" data-t="rpt_s5">5. Desempeno economico (G)</div>
+        <dl>
+          <div class="report-row"><dt data-t="rpt_revenue">Facturacion / Ingresos</dt><dd id="out-ingresos"></dd></div>
+          <div class="report-row"><dt data-t="rpt_rdi">Inversion I+D+i</dt><dd id="out-idi"></dd></div>
+          <div class="report-row"><dt data-t="rpt_training_inv">Inversion formacion</dt><dd id="out-eco-form"></dd></div>
+          <div class="report-row"><dt data-t="rpt_esg_inv">Inversion ESG</dt><dd id="out-eco-esg"></dd></div>
+          <div class="report-row"><dt data-t="rpt_suppliers">Proveedores principales</dt><dd id="out-prov"></dd></div>
+          <div class="report-row"><dt data-t="rpt_local_sup">% Proveedores locales</dt><dd id="out-prov-local"></dd></div>
+        </dl>
+        <div class="report-text-block" id="out-eco-logros" style="margin-top:0.5rem"></div>
+        <div class="report-text-block" id="out-eco-retos"></div>
+      </div>
+      <div class="report-section" id="out-email-section" style="display:none">
+        <div class="report-section-title" data-t="rpt_custom">Personalizacion avanzada</div>
+        <div class="report-text-block" data-t="rpt_custom_text">Has seleccionado la opcion de personalizacion avanzada. Nuestro equipo se pondra en contacto contigo.</div>
+      </div>
+      <div class="report-section" id="out-texto-section" style="display:none">
+        <div class="report-section-title" data-t="rpt_text_title">Texto listo para Canva / Word</div>
+        <textarea id="out-texto-canva" aria-label="Texto de la memoria listo para Canva o Word" style="width:100%;min-height:300px;font-family:monospace;font-size:0.78rem;padding:1rem;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);resize:vertical" readonly></textarea>
+        <button class="btn btn-outline" style="margin-top:0.5rem" onclick="MATRIZ.copiarTexto()" data-t="btn_copy">Copiar texto</button>
+      </div>
+    </div>
+    <div class="report-actions">
+      <button class="btn btn-primary" id="btn-pdf" onclick="MATRIZ.generarPDF()" style="display:none" data-t="btn_pdf">Descargar PDF</button>
+      <button class="btn btn-outline" id="btn-print" onclick="window.print()" style="display:none" data-t="btn_print">Imprimir</button>
+      <button class="btn btn-ghost" onclick="MATRIZ.reiniciar()" data-t="btn_restart">Volver a empezar</button>
+    </div>
+  </div>
+
+<div class="toast" id="toast"></div>
+
+</div><!-- /.matriz-wrap -->
+
+<script src="script.js"></script>
+</body>
+</html>
